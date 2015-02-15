@@ -1,0 +1,16 @@
+global_params:
+  debug: true
+
+registries:
+  heath_ceramics:
+    url: http://www.heathceramics.com/giftregistry/view/index/id/YOUR_UNIQUE_REGISTRY_ID
+
+  zola:
+    url: https://www.zola.com/registry/YOUR_REGISTRY_SLUG/edit
+    email: YOUR_EMAIL
+    password: YOUR_PASSWORD
+
+  rei:
+    url: https://www.rei.com/GiftRegistryEditProducts/YOUR_UNIQUE_REGISTRY_ID?URL=GiftRegistryManage
+    email: YOUR_EMAIL
+    password: YOUR_PASSWORD
