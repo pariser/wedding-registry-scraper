@@ -5,6 +5,9 @@ registries:
   heath_ceramics:
     url: http://www.heathceramics.com/giftregistry/view/index/id/YOUR_UNIQUE_REGISTRY_ID
 
+  crate_and_barrel:
+    url: http://www.crateandbarrel.com/Gift-Registry/YOUR_NAMES/YOUR_UNIQUE_REGISTRY_ID
+
   zola:
     url: https://www.zola.com/registry/YOUR_REGISTRY_SLUG/edit
     email: YOUR_EMAIL
