@@ -47,6 +47,59 @@ private
       instance_variable_set("@#{param}", provided.delete(param)) if provided.has_key?(param)
     end
   end
+
+  def make_request(method, url, params={})
+    json = params.delete(:json)
+    request_params = {}
+
+    if cookies = params.delete(:cookies)
+      request_params[:headers] = {
+        'Cookie' => dump_cookies(cookies)
+      }
+    end
+
+    if json
+      request_params[:headers] = {
+        'Accept' => "application/json"
+      }
+    end
+
+    request_params[:parameters] = json ? params.to_json : params
+
+    puts "#{method.to_s.upcase} #{url} with params #{request_params.to_json}" if @debug
+    result = Unirest.send(method, url, request_params)
+
+    puts "RESULT #{result.code} with headers #{result.headers.inspect}" if @debug
+
+    open_result_in_browser(result) if @debug
+
+    cookies = load_cookies(result.headers[:set_cookie])
+
+    [ result, cookies ]
+  end
+
+  def open_result_in_browser(result)
+    file = Tempfile.new(['weddding-scraper','.html'])
+    file << result.body
+    file.close
+
+    `open "#{file.path}"`
+
+    sleep 1
+    file.unlink
+  end
+
+  def dump_cookies(cookies)
+    cookies.map { |k, v| "#{k}=#{v}" }.join("; ")
+  end
+
+  def load_cookies(set_cookie)
+    set_cookie ||= []
+    set_cookie.reduce({}) do |cookies, cookie|
+      key, value = cookie.split(';')[0].split('=')
+      cookies.merge!(key => value || "")
+    end
+  end
 end
 
 # ----------------------------
@@ -69,7 +122,7 @@ class PublicRegistry < Registry
   end
 
   def get_registry
-    result = Unirest.get(@url)
+    result, _ = make_request(:get, @url)
     Nokogiri::HTML(result.body)
   end
 end
@@ -81,6 +134,7 @@ class PrivateRegistry < Registry
     # Required class instance variables
     attr_accessor :login_url
     attr_accessor :login_cookies
+    attr_accessor :login_json
   end
 
   REQUIRED_PARAMS = [
@@ -89,7 +143,8 @@ class PrivateRegistry < Registry
   ]
 
   OPTIONAL_PARAMS = [
-    :cookies
+    :cookies,
+    :json,
   ]
 
   (REQUIRED_PARAMS + OPTIONAL_PARAMS).each do |param|
@@ -118,19 +173,17 @@ class PrivateRegistry < Registry
       login!
     end
 
-    cookie_string = @cookies.map { |k, v| "#{k}=#{v}" }.join("; ")
-    puts "GET  #{@url} with cookie: #{cookie_string}" if @debug
-
-    result = Unirest.get(@url, :headers => { :cookie => cookie_string })
+    result, _ = make_request(:get, @url, :cookies => @cookies)
 
     doc = Nokogiri::HTML(result.body)
     authenticated = authenticated?(doc)
+    puts (authenticated ? "Authenticated!" : "NOT Authenticated!").yellow if @debug
 
     if !authenticated && should_retry
       puts "* Retrying login to #{@name}"
       login!
 
-      result = Unirest.get(@url, :headers => { :cookie => @cookie })
+      result, _ = make_request(:get, @url, :cookies => @cookie)
       doc = Nokogiri::HTML(result.body)
       authenticated = authenticated?(doc)
     end
@@ -141,23 +194,15 @@ class PrivateRegistry < Registry
   end
 
   def login!
-    puts "POST to #{self.class.login_url}, params #{@login_params.inspect}" if @debug
-    login_result = Unirest.post self.class.login_url, :parameters => @login_params
-    puts "     RESULT #{login_result.inspect}" if @debug
-    puts "     COOKIES #{login_result.headers[:set_cookie]}" if @debug
+    result, cookies = make_request(:post, self.class.login_url, @login_params.merge(:json => self.class.login_json))
 
-    cookies = login_result.headers[:set_cookie].reduce({}) do |cookies, cookie|
-      key, value = cookie.split(';')[0].split('=')
-      cookies.merge!(key => value)
+    login_cookies = cookies.slice(*self.class.login_cookies)
+    missing_login_cookies = (self.class.login_cookies - login_cookies.keys)
+
+    if missing_login_cookies.any?
+      puts "* Didn't find all cookies. Missing: #{missing_cookies.inspect}.".yellow
+      return nil
     end
-
-    login_cookies = cookies.reduce({}) do |hash, pair|
-      key, value = pair
-      hash[key] = value if self.class.login_cookies.include?(key)
-      hash
-    end
-
-    return false if login_cookies.length < self.class.login_cookies.length
 
     @cookies = login_cookies
     puts "* Got new #{self.class.name.demodulize} login cookies: #{@cookies.inspect}".yellow
