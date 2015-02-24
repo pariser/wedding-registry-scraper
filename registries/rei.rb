@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::Rei < PublicRegistry
+class Registries::Rei < Registry
 private
   def get_products(doc)
     doc.css('table.registryList').first.css('tr.tr0')

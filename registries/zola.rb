@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::Zola < PublicRegistry
+class Registries::Zola < Registry
 private
   def get_products(doc)
     doc.css('#all-panel .product-tile')

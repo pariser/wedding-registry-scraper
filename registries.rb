@@ -16,8 +16,9 @@ module Registries
     end
 
     def initialize_registry(registry, params={})
+      url = params.delete("url") || params.delete(:url)
       klass = get_registry_class(registry)
-      klass ? klass.new(params) : nil
+      klass ? klass.new(url, params) : nil
     end
   end
 end

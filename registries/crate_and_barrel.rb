@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::CrateAndBarrel < PublicRegistry
+class Registries::CrateAndBarrel < Registry
 private
   def get_products(doc)
     doc.css('.jsItemRow:not(.emptyCategoryRow)')

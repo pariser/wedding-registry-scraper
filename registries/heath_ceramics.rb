@@ -4,7 +4,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflector|
   inflector.uncountable 'heath_ceramics'
 end
 
-class Registries::HeathCeramics < PublicRegistry
+class Registries::HeathCeramics < Registry
 private
   def get_products(doc)
     doc.css('table#shopping-cart-table tbody tr')

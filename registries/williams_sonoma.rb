@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::WilliamsSonoma < PublicRegistry
+class Registries::WilliamsSonoma < Registry
 private
   def get_products(doc)
     doc.css('table.registry-category-list tbody tr')
