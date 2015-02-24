@@ -17,3 +17,6 @@ registries:
     url: https://www.rei.com/GiftRegistryEditProducts/YOUR_UNIQUE_REGISTRY_ID?URL=GiftRegistryManage
     email: YOUR_EMAIL
     password: YOUR_PASSWORD
+
+  williams_sonoma:
+    url: https://secure.williams-sonoma.com/registry/YOUR_UNIQUE_REGISTRY_ID/registry-list.html
