@@ -1,5 +1,5 @@
 global_params:
-  debug: true
+  debug: false
 
 registries:
   heath_ceramics:
@@ -9,9 +9,7 @@ registries:
     url: http://www.crateandbarrel.com/Gift-Registry/YOUR_NAMES/YOUR_UNIQUE_REGISTRY_ID
 
   zola:
-    url: https://www.zola.com/registry/YOUR_REGISTRY_SLUG/edit
-    email: YOUR_EMAIL
-    password: YOUR_PASSWORD
+    url: https://www.zola.com/registry/YOUR_REGISTRY_SLUG
 
   rei:
     url: http://www.rei.com/GiftRegistryDetails/YOUR_UNIQUE_REGISTRY_ID
