@@ -7,7 +7,14 @@ require 'active_support/core_ext/hash'
 class AuthenticationFailed < StandardError; end
 
 class Registry
-  attr_reader :url
+  PRICE_TYPES = [
+    FIXED_PRICE = 'Fixed price',
+    VARIABLE_PRICE = 'Variable price',
+  ]
+
+  class << self
+    attr_reader :display_name
+  end
 
   def initialize(url, params={})
     params.symbolize_keys!
@@ -24,7 +31,14 @@ class Registry
       details = {
         :name => get_name(product),
         :remaining => get_remaining(product),
+        :desired => get_desired(product),
         :url => get_url(product),
+        :image_url => get_image_url(product),
+        :registry_name => self.class.display_name,
+        :price => {
+          :type => price_type(product),
+          :value => get_price(product),
+        },
       }
 
       products.merge! sku => details
@@ -35,10 +49,17 @@ private
 
   def get_products(doc)      ; raise NotImplementedError; end
 
-  def get_name(product)      ; raise NotEmplementedError; end
-  def get_sku(product)       ; raise NotEmplementedError; end
-  def get_url(product)       ; raise NotEmplementedError; end
-  def get_remaining(product) ; raise NotEmplementedError; end
+  def get_name(product)      ; raise NotImplementedError; end
+  def get_sku(product)       ; raise NotImplementedError; end
+  def get_url(product)       ; raise NotImplementedError; end
+  def get_image_url(product) ; raise NotImplementedError; end
+  def get_remaining(product) ; raise NotImplementedError; end
+  def get_desired(product)   ; raise NotImplementedError; end
+  def get_price(product)     ; raise NotImplementedError; end
+
+  def price_type(product)
+    FIXED_PRICE
+  end
 
   def get_registry
     result, _ = make_request(:get, @url)
