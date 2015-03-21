@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'colored'
 require 'active_support/core_ext/string'
 require 'wedding_registry_scraper/registry'
 

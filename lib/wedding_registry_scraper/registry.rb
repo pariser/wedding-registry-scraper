@@ -1,6 +1,5 @@
 require 'unirest'
 require 'nokogiri'
-require 'colored'
 require 'pp'
 require 'active_support/core_ext/hash'
 
