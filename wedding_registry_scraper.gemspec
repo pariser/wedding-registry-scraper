@@ -1,6 +1,8 @@
+require './lib/wedding_registry_scraper/version.rb'
+
 Gem::Specification.new do |s|
   s.name        = 'wedding_registry_scraper'
-  s.version     = '0.0.1'
+  s.version     = WeddingRegistryScraper::VERSION.to_s
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = "A wedding registry scraper"
   s.description = "Look at a bunch of various retailers' wedding registries and consolidate information in one place."
