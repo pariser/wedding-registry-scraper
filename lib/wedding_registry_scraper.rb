@@ -1,3 +1,6 @@
+require 'active_support/all'
+require_relative 'wedding_registry_scraper/version'
+
 module WeddingRegistryScraper
   autoload :Registry, 'wedding_registry_scraper/registry'
   autoload :Registries, 'wedding_registry_scraper/registries'

@@ -1,9 +1,5 @@
 require 'unirest'
 require 'nokogiri'
-require 'pp'
-require 'active_support/core_ext/hash'
-
-class AuthenticationFailed < StandardError; end
 
 class WeddingRegistryScraper::Registry
   PRICE_TYPES = [

@@ -1,7 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'uri'
-
 class WeddingRegistryScraper::Registries::Rei < WeddingRegistryScraper::Registry
   @display_name = "REI"
 private

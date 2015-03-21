@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 class WeddingRegistryScraper::Registries::CrateAndBarrel < WeddingRegistryScraper::Registry
   @display_name = "Crate & Barrel"
 private

@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 class WeddingRegistryScraper::Registries::WilliamsSonoma < WeddingRegistryScraper::Registry
   @display_name = "Williams-Sonoma"
 private

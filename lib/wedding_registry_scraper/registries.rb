@@ -1,8 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'active_support/core_ext/string'
-require 'wedding_registry_scraper/registry'
-
 module WeddingRegistryScraper::Registries
   class << self
     def get_registry_class(registry)

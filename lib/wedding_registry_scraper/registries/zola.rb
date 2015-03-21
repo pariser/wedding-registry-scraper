@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 class WeddingRegistryScraper::Registries::Zola < WeddingRegistryScraper::Registry
   @display_name = "Zola"
 private
