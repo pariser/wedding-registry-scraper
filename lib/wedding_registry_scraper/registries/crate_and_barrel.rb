@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::CrateAndBarrel < Registry
+class WeddingRegistryScraper::Registries::CrateAndBarrel < WeddingRegistryScraper::Registry
   @display_name = "Crate & Barrel"
 private
   def get_products(doc)

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::WilliamsSonoma < Registry
+class WeddingRegistryScraper::Registries::WilliamsSonoma < WeddingRegistryScraper::Registry
   @display_name = "Williams-Sonoma"
 private
   def get_products(doc)

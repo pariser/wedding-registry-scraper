@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-class Registries::Zola < Registry
+class WeddingRegistryScraper::Registries::Zola < WeddingRegistryScraper::Registry
   @display_name = "Zola"
 private
   def get_products(doc)
@@ -40,9 +40,17 @@ private
     product_price = product.css('.product-price')
 
     if product_price.length > 0 && product_price[0].text.strip == 'Contribute what you wish'
-      Registry::VARIABLE_PRICE
+      WeddingRegistryScraper::Registry::VARIABLE_PRICE
     else
-      Registry::FIXED_PRICE
+      WeddingRegistryScraper::Registry::FIXED_PRICE
+    end
+  end
+
+  def fulfilled?(product)
+    if price_type(product) == WeddingRegistryScraper::Registry::VARIABLE_PRICE
+      get_price(product) <= 0
+    else
+      get_remaining(product) <= 0
     end
   end
 end

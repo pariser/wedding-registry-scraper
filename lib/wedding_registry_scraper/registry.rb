@@ -6,7 +6,7 @@ require 'active_support/core_ext/hash'
 
 class AuthenticationFailed < StandardError; end
 
-class Registry
+class WeddingRegistryScraper::Registry
   PRICE_TYPES = [
     FIXED_PRICE = 'Fixed price',
     VARIABLE_PRICE = 'Variable price',
@@ -35,10 +35,9 @@ class Registry
         :url => get_url(product),
         :image_url => get_image_url(product),
         :registry_name => self.class.display_name,
-        :price => {
-          :type => price_type(product),
-          :value => get_price(product),
-        },
+        :fulfilled => fulfilled?(product),
+        :price_type => price_type(product),
+        :price_value => get_price(product),
       }
 
       products.merge! sku => details
@@ -59,6 +58,10 @@ private
 
   def price_type(product)
     FIXED_PRICE
+  end
+
+  def fulfilled?(product)
+    get_remaining(product) == 0
   end
 
   def get_registry

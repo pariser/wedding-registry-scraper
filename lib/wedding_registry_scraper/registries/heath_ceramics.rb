@@ -6,7 +6,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflector|
   inflector.uncountable 'heath_ceramics'
 end
 
-class Registries::HeathCeramics < Registry
+class WeddingRegistryScraper::Registries::HeathCeramics < WeddingRegistryScraper::Registry
   @display_name = "Heath Ceramics"
 private
   def get_products(doc)

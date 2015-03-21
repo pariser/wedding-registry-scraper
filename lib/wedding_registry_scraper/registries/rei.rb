@@ -2,7 +2,7 @@
 
 require 'uri'
 
-class Registries::Rei < Registry
+class WeddingRegistryScraper::Registries::Rei < WeddingRegistryScraper::Registry
   @display_name = "REI"
 private
   def get_product_details_url(product)

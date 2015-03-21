@@ -1,15 +1,16 @@
 #!/usr/bin/env ruby
 
 require 'colored'
-require './registry'
 require 'active_support/core_ext/string'
+require 'wedding_registry_scraper/registry'
 
-module Registries
+module WeddingRegistryScraper::Registries
   class << self
     def get_registry_class(registry)
-      class_name = "Registries::#{registry.classify}"
+      class_name = "WeddingRegistryScraper::Registries::#{registry.to_s.classify}"
       klass = class_name.constantize
-    rescue
+    rescue => e
+      puts e
       STDERR.puts "Registry #{registry.inspect} not found (could not find class #{class_name.inspect})"
     else
       klass
