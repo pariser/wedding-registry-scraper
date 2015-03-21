@@ -33,13 +33,13 @@ Use `WeddingRegistryScraper#scrape`:
 
     require 'wedding_registry_scraper'
 
-    WeddingRegistryScraper.scrape({
-      :heath_ceramics   => "http://www.heathceramics.com/giftregistry/view/index/id/YOUR_UNIQUE_REGISTRY_ID",
-      :crate_and_barrel => "http://www.crateandbarrel.com/Gift-Registry/YOUR_NAMES/YOUR_UNIQUE_REGISTRY_ID",
-      :zola             => "https://www.zola.com/registry/YOUR_REGISTRY_SLUG",
-      :rei              => "http://www.rei.com/GiftRegistryDetails/YOUR_UNIQUE_REGISTRY_ID",
-      :williams_sonoma  => "https://secure.williams-sonoma.com/registry/YOUR_UNIQUE_REGISTRY_ID/registry-list.html",
-    })
+    WeddingRegistryScraper.scrape([
+      "http://www.heathceramics.com/giftregistry/view/index/id/YOUR_UNIQUE_REGISTRY_ID",
+      "http://www.crateandbarrel.com/Gift-Registry/YOUR_NAMES/YOUR_UNIQUE_REGISTRY_ID",
+      "https://www.zola.com/registry/YOUR_REGISTRY_SLUG",
+      "http://www.rei.com/GiftRegistryDetails/YOUR_UNIQUE_REGISTRY_ID",
+      "https://secure.williams-sonoma.com/registry/YOUR_UNIQUE_REGISTRY_ID/registry-list.html",
+    ])
 
 
 ## Want to Help?

@@ -9,6 +9,7 @@ class WeddingRegistryScraper::Registry
 
   class << self
     attr_reader :display_name
+    attr_reader :domain
   end
 
   def initialize(url, params={})

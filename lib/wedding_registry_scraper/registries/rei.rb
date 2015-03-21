@@ -1,5 +1,6 @@
 class WeddingRegistryScraper::Registries::Rei < WeddingRegistryScraper::Registry
   @display_name = "REI"
+  @domain = "rei.com"
 private
   def get_product_details_url(product)
     href = product.css('a[name=prod]')[0]['href'].sub(/^\/?/, '')

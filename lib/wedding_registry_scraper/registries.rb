@@ -1,19 +1,24 @@
 module WeddingRegistryScraper::Registries
   class << self
-    def get_registry_class(registry)
-      class_name = "WeddingRegistryScraper::Registries::#{registry.to_s.classify}"
-      klass = class_name.constantize
-    rescue => e
-      puts e
-      STDERR.puts "Registry #{registry.inspect} not found (could not find class #{class_name.inspect})"
-    else
-      klass
+    def registry_classes
+      @registry_classes ||= begin
+        self.constants.map do |const|
+          obj = self.const_get(const)
+          obj if obj.is_a?(Class) && obj < WeddingRegistryScraper::Registry
+        end.compact
+      end
+      @registry_classes
     end
 
-    def initialize_registry(registry, params={})
-      url = params.delete("url") || params.delete(:url)
-      klass = get_registry_class(registry)
-      klass ? klass.new(url, params) : nil
+    def registry_class_from_url(url)
+      registry_classes.detect do |klass|
+        /^https?:\/\/[^\/]*#{klass.domain}/.match(url)
+      end
+    end
+
+    def initialize_registry(url, options={})
+      klass = registry_class_from_url(url)
+      klass ? klass.new(url, options) : nil
     end
   end
 end

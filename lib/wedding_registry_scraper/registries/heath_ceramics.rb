@@ -6,6 +6,7 @@ end
 
 class WeddingRegistryScraper::Registries::HeathCeramics < WeddingRegistryScraper::Registry
   @display_name = "Heath Ceramics"
+  @domain = "heathceramics.com"
 private
   def get_products(doc)
     doc.css('table#shopping-cart-table tbody tr')

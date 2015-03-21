@@ -1,5 +1,6 @@
 class WeddingRegistryScraper::Registries::CrateAndBarrel < WeddingRegistryScraper::Registry
   @display_name = "Crate & Barrel"
+  @domain = "crateandbarrel.com"
 private
   def get_products(doc)
     doc.css('.jsItemRow:not(.emptyCategoryRow)')

@@ -1,5 +1,6 @@
 class WeddingRegistryScraper::Registries::Zola < WeddingRegistryScraper::Registry
   @display_name = "Zola"
+  @domain = "zola.com"
 private
   def get_products(doc)
     doc.css('#all-panel .product-tile')

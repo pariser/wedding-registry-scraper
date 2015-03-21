@@ -1,5 +1,6 @@
 class WeddingRegistryScraper::Registries::WilliamsSonoma < WeddingRegistryScraper::Registry
   @display_name = "Williams-Sonoma"
+  @domain = "williams-sonoma.com"
 private
   def get_products(doc)
     doc.css('table.registry-category-list tbody tr')
