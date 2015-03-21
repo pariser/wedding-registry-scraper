@@ -13,6 +13,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'unirest', '~> 1.1', '>= 1.1.2'
   s.add_runtime_dependency 'nokogiri', '~> 1.6'
-  s.add_runtime_dependency 'safe_yaml', '~> 1.0'
-  s.add_runtime_dependency 'activesupport', '~> 4.0'
+  s.add_runtime_dependency 'activesupport', '~> 4.2'
 end
