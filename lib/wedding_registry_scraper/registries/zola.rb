@@ -24,11 +24,18 @@ private
     product.css('[data-image-url]')[0]['data-image-url']
   end
 
+  def get_needed_section(product)
+    product.css('.needed').text.strip
+  end
+
   def get_remaining(product)
-    product.css('.needed').text.strip.gsub(/[^\d]+/, '').to_i
+    needed_text = get_needed_section(product)
+    /Still Needs: (\d+)/.match(needed_text) { $1 }.to_i
   end
 
   def get_desired(product)
+    needed_text = get_needed_section(product)
+    /Requested: (\d+)/.match(needed_text) { $1 }.to_i
   end
 
   def get_price(product)
