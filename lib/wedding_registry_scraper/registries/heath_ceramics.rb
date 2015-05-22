@@ -18,8 +18,13 @@ private
 
   def get_sku(product)
     text = product.css('.ctxProductCol .tinyText').map(&:text).detect { |t| t =~ /SKU/ }
-    sku = text.match(/SKU:\s+(\S+)/)[1]
-    "heath:#{sku}"
+    if text
+      sku = text.match(/SKU:\s+(\S+)/)[1]
+      "heath:#{sku}"
+    else
+      title = product.css('.ctxProductCol .attentionText').text.parameterize
+      "heath:#{title}"
+    end
   end
 
   def get_url(product)
