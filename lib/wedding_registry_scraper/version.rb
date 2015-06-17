@@ -1,5 +1,5 @@
 module WeddingRegistryScraper
-  VERSION = Gem::Version.new("0.0.4")
+  VERSION = Gem::Version.new("0.0.5")
 
   def self.version
     VERSION
