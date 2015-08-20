@@ -3,8 +3,9 @@ class WeddingRegistryScraper::Registries::Rei < WeddingRegistryScraper::Registry
   @domain = "rei.com"
 private
   def get_product_details_url(product)
-    href = product.css('a[name=prod]')[0]['href'].sub(/^\/?/, '')
-    "https://www.rei.com/#{href.sub(/^\//, '')}"
+    link = product.css('a[name=prod]')
+    return if link.empty?
+    "https://www.rei.com/#{link[0]['href'].sub(/^\/?/, '')}"
   end
 
   def get_products(doc)
@@ -12,11 +13,11 @@ private
   end
 
   def get_name(product)
-    product.css('a[name=prod]').text.strip
+    product.css('td')[1].children.first.text.strip
   end
 
   def get_sku(product)
-    sku = get_product_details_url(product).match(/\/product\/(\d+)/)[1].to_i
+    sku = product.css('td')[1].children.last.text.strip
     "rei-#{sku}"
   end
 
@@ -26,6 +27,7 @@ private
 
   def get_image_url(product)
     details_url = get_product_details_url(product)
+    return "" if details_url.blank?
 
     puts "GET #{details_url.inspect}" if @debug
     result = Unirest.get(details_url)
