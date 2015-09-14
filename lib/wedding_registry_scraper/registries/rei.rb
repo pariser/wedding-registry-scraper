@@ -33,7 +33,12 @@ private
     result = Unirest.get(details_url)
     doc = Nokogiri::HTML(result.body)
 
-    image_url = doc.css('#zoomLink')[0]['href']
+    if (obj = doc.css('#zoomLink')).present?
+      image_url = obj[0]['href']
+    elsif (obj = doc.css('#js-product-primary-img')).present?
+      image_url = obj[0]['data-high-res-img']
+    end
+
     "https://www.rei.com/#{image_url.sub(/^\//,'')}"
   end
 
