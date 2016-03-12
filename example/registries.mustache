@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title> Wedding Registry </title>
+    <link href="normalize.css" rel="stylesheet"></link>
+    <link href="registries.css" rel="stylesheet"></link>
+    <!-- <style></style> -->
+  </head>
+  <body>
+    {{#registries}}
+      <div class="registry">
+        <h1 class="registry-title">
+          Items available at
+          <a href="{{registry_url}}">{{registry_name}}</a>
+        </h1>
+        <ul>
+          {{#registry_items}}
+            <li class="registry-item">
+              <a href="{{url}}" class="registry-item-url">
+                <img src="{{image_src}}" class="registry-item-image">
+                <h3 class="registry-item-title">{{name}}</h2>
+                <ul class="registry-item-details">
+                  <li>{{fulfillment_description}}</li>
+                  <li>{{price_description}}</li>
+                </ul>
+              </a>
+            </li>
+          {{/registry_items}}
+        </ul>
+      </div>
+    {{/registries}}
+ </body>
+</html>
