@@ -2,7 +2,6 @@
 
 require 'mustache'
 require 'wedding_registry_scraper'
-require 'pry-byebug'
 
 class RegistryNotFoundError < StandardError; end
 

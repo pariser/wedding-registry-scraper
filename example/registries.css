@@ -49,7 +49,6 @@ li.registry-item:first-child {
   top: 0;
   height: 100px;
   width: 100px;
-  /*padding-top: 100%;*/
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -63,10 +62,6 @@ li.registry-item:first-child {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-ul.registry-item-details {
-  padding-left: 0;
 }
 
 ul.registry-item-details > li {
