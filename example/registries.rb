@@ -2,6 +2,7 @@
 
 require 'mustache'
 require 'wedding_registry_scraper'
+require 'pp'
 
 class RegistryNotFoundError < StandardError; end
 
@@ -59,7 +60,7 @@ class RegistryItem < Mustache
 end
 
 class Registry < Mustache
-  def initialize(registry_url)
+  def initialize(registry_url, options={})
     @registry_url = registry_url
 
     @registry_scraper = WeddingRegistryScraper::Registries.initialize_registry(registry_url)
@@ -68,7 +69,11 @@ class Registry < Mustache
     end
 
     STDERR.puts "* Loading items from #{registry_name}"
-    @registry_items = @registry_scraper.get_items.map do |registry_item_sku, registry_item_data|
+
+    items = @registry_scraper.get_items
+    pp items if options[:verbose]
+
+    @registry_items = items.map do |registry_item_sku, registry_item_data|
       RegistryItem.new(registry_item_sku, registry_item_data)
     end
   end
@@ -89,9 +94,9 @@ end
 # Registries is a Mustache class that renders the `registries.mustache` file
 #
 class Registries < Mustache
-  def initialize(registry_urls)
+  def initialize(registry_urls, options={})
     @registries = registry_urls.map do |registry_url|
-      Registry.new(registry_url)
+      Registry.new(registry_url, options)
     end
   end
 
@@ -105,7 +110,10 @@ end
 # can open in your browser.
 #
 if $0 == __FILE__
-  if ARGV.length == 0
+  argv = ARGV.dup
+  verobse = true if argv.delete('-v') || argv.delete('--verbose')
+
+  if argv.length == 0
     STDERR.puts <<-USAGE
       Expected to receive one or more registry urls.
 
@@ -117,5 +125,8 @@ if $0 == __FILE__
     exit 1
   end
 
-  puts Registries.new(ARGV).render
+  options = {}
+  options[:verbose] = true if verobse
+
+  puts Registries.new(argv, options).render
 end
