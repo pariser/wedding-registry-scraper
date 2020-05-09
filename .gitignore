@@ -3,3 +3,4 @@ config.yml
 *.gem
 .ruby-version
 Gemfile.lock
+example/Gemfile.lock
